@@ -7,7 +7,7 @@
 [![yfinance](https://img.shields.io/badge/yfinance-Market%20Data-00c853.svg)](https://pypi.org/project/yfinance/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A modular, beginner-to-intermediate Python application designed to download historical stock market data, process price trends using **Pandas** and **NumPy**, calculate technical indicators (**20-Day & 50-Day Simple Moving Averages**, **14-Day RSI**), and generate multi-pane financial charts with **Matplotlib**.
+A modular, intermediate-level Python application designed to download historical stock market data, process price trends using **Pandas** and **NumPy**, calculate core technical indicators (**SMA, EMA, Bollinger Bands, RSI, and MACD**), and generate professional multi-pane financial charts with **Matplotlib**.
 
 > **Resume Impact Highlight**:
 > *"Developed a Python application to analyze historical stock market data and visualize price trends. Processed and analyzed stock data using Pandas and NumPy, calculated technical indicators such as Moving Averages and RSI, and generated visual reports using Matplotlib."*
@@ -16,17 +16,19 @@ A modular, beginner-to-intermediate Python application designed to download hist
 
 ## 🌟 Key Features
 
-- **Automated Data Retrieval**: Downloads historical OHLCV (Open, High, Low, Close, Volume) market data directly via Yahoo Finance (`yfinance`).
-- **Interactive Ticker Selection**: Accepts user-defined ticker symbols (e.g. `AAPL`, `MSFT`, `TSLA`, `NVDA`, `GOOGL`) or command-line parameters.
-- **Technical Indicator Computation**:
-  - **20-Day Simple Moving Average (SMA_20)**: Short-term price trend indicator.
-  - **50-Day Simple Moving Average (SMA_50)**: Medium-to-long term price trend indicator.
-  - **14-Day Relative Strength Index (RSI_14)**: Momentum oscillator measuring overbought (>=70) and oversold (<=30) conditions.
-- **Multi-Pane Dashboard Visualization**:
-  - **Top Panel**: Price trend line with overlaid 20-day & 50-day moving averages.
-  - **Middle Panel**: Daily trading volume bar chart (color-coded green for gain days, red for loss days).
-  - **Bottom Panel**: RSI indicator with shaded overbought and oversold boundary zones.
-- **Data Export & Auto-Saving**: Automatically saves clean raw data to `data/`, analyzed indicator data to `output/{TICKER}_analyzed.csv`, and figure dashboards to `images/{TICKER}_chart.png`.
+- **Automated Data Ingestion**: Downloads historical daily stock quotes (OHLCV) directly via Yahoo Finance (`yfinance`).
+- **Interactive CLI & CLI Arguments**: Accept tickers (e.g. `AAPL`, `MSFT`, `TSLA`, `NVDA`) and custom periods either dynamically or via script parameters.
+- **Advanced Technical Indicators**:
+  - **Moving Averages**: 20-day/50-day Simple Moving Averages (**SMA**) and Exponential Moving Averages (**EMA**).
+  - **Bollinger Bands**: 20-day volatility channel with Upper, Middle, and Lower bands (set at $\pm 2$ standard deviations).
+  - **RSI (14)**: Relative Strength Index oscillator measuring momentum and overbought/oversold levels.
+  - **MACD (12, 26, 9)**: Moving Average Convergence Divergence line, signal line, and daily histogram bars.
+- **4-Pane Visual Report**:
+  - **Panel 1**: Price trend lines (Close, SMAs, EMA) with a semi-transparent Bollinger Bands volatility channel.
+  - **Panel 2**: Daily transaction Volume bars (green for positive price change, red for negative).
+  - **Panel 3**: MACD Convergence/Divergence lines and histogram difference bars.
+  - **Panel 4**: RSI oscillator line with overbought ($\ge 70$) and oversold ($\le 30$) highlighted bands.
+- **Data Export & Auto-Saving**: Automatically writes raw downloads to `data/`, analyzed outputs to `output/{TICKER}_analyzed.csv`, and dashboards to `images/{TICKER}_chart.png`.
 
 ---
 
@@ -34,23 +36,23 @@ A modular, beginner-to-intermediate Python application designed to download hist
 
 ```text
 Stock Market Analysis using Python/
-├── data/                  # Storage for raw downloaded historical stock data (CSV)
+├── data/                  # Raw downloaded historical stock data (CSV)
 │   ├── AAPL_raw.csv
 │   └── .gitkeep
-├── output/                # Storage for processed data with technical indicators (CSV)
+├── output/                # Processed stock data with technical indicators (CSV)
 │   ├── AAPL_analyzed.csv
 │   └── .gitkeep
-├── images/                # Auto-saved multi-panel financial chart figures (PNG)
+├── images/                # Generated financial dashboard chart figures (PNG)
 │   ├── AAPL_chart.png
 │   └── .gitkeep
-├── src/                   # Source code modules
+├── src/                   # Source modules
 │   ├── __init__.py        # Package initialization
-│   ├── downloader.py      # Stock historical data fetcher module
+│   ├── downloader.py      # Stock historical data retriever
 │   ├── indicators.py      # Vectorized technical indicator computations
-│   ├── visualization.py   # Multi-pane Matplotlib dashboard generator
-│   └── main.py            # Main entry point and CLI pipeline orchestrator
+│   ├── visualization.py   # 4-pane Matplotlib dashboard generator
+│   └── main.py            # CLI pipeline orchestrator
 ├── README.md              # Project documentation
-├── requirements.txt       # Project dependencies
+├── requirements.txt       # Python dependencies
 └── .gitignore             # Version control exclusions
 ```
 
@@ -66,7 +68,7 @@ python --version
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/your-username/Stock-Market-Analysis.git
+git clone https://github.com/0ANSHKUMARSINGH4/Stock-Market-Analysis.git
 cd Stock-Market-Analysis
 ```
 
@@ -91,7 +93,7 @@ pip install -r requirements.txt
 ## 🚀 Usage Guide
 
 ### Option 1: Interactive Prompt Mode
-Run the main script without parameters to trigger interactive user inputs:
+Run the main script without parameters to trigger interactive inputs:
 ```bash
 python src/main.py
 ```
@@ -102,33 +104,44 @@ python src/main.py
 ============================================================
 
 [Input Required]
-Enter Stock Ticker Symbol (e.g. AAPL, MSFT, TSLA) [Default: AAPL]: TSLA
+Enter Stock Ticker Symbol (e.g. AAPL, MSFT, TSLA) [Default: AAPL]: AAPL
 
-[Pipeline Initialization] Analyzing Ticker: 'TSLA' for Period: '1y'
+[Pipeline Initialization] Analyzing Ticker: 'AAPL' for Period: '1y'
 ------------------------------------------------------------
-[Downloader] Fetching data for ticker: 'TSLA'...
-[Downloader] Successfully fetched 252 rows of data for 'TSLA'.
-[Downloader] Saved raw data to: data\TSLA_raw.csv
+[Downloader] Fetching data for ticker: 'AAPL'...
+[Downloader] Successfully fetched 252 rows of data for 'AAPL'.
+[Downloader] Saved raw data to: data\AAPL_raw.csv
 
 [Analysis Phase] Calculating Technical Indicators...
 [Indicators] Added SMA_20 and SMA_50 indicators.
+[Indicators] Added EMA_20 and EMA_50 indicators.
+[Indicators] Added Bollinger Bands (Middle, Upper, Lower).
 [Indicators] Added RSI_14 technical indicator.
+[Indicators] Added MACD indicators (MACD, Signal, Histogram).
 
-[Export Success] Analyzed dataset exported to CSV: output\TSLA_analyzed.csv
+[Export Success] Analyzed dataset exported to CSV: output\AAPL_analyzed.csv
+
+[Dataset Summary]
+      Date      Close     SMA_20     EMA_20   BB_Upper   BB_Lower     MACD  RSI_14
+2026-07-15 327.500000 301.927499 306.784438 329.825669 274.029330 6.611093   68.78
+2026-07-16 333.260010 303.628500 309.305921 334.793926 272.463075 7.879707   71.44
+2026-07-17 333.739990 305.517999 311.632975 339.203655 271.832343 8.822128   71.66
+2026-07-20 326.589996 306.946999 313.057453 341.699521 272.194476 8.889585   63.88
+2026-07-21 327.769989 308.484998 314.458647 344.097825 272.872170 8.935260   64.56
 
 [Visualization Phase] Generating and auto-saving chart dashboard...
-[Visualization] Generating chart dashboard for 'TSLA'...
-[Visualization] Stock chart auto-saved to: images\TSLA_chart.png
+[Visualization] Generating comprehensive 4-panel chart dashboard for 'AAPL'...
+[Visualization] Stock chart auto-saved to: images\AAPL_chart.png
 ```
 
 ### Option 2: Command Line Argument Mode
-Pass custom tickers, lookback periods, or suppress plot popup display:
+Pass custom tickers, periods, or suppress visualization popups:
 ```bash
 # Analyze Microsoft stock over a 6-month period
 python src/main.py --ticker MSFT --period 6m
 
-# Run automated analysis without popping up GUI plot window
-python src/main.py --ticker NVDA --period 1y --no-show
+# Run batch script mode without GUI popups
+python src/main.py --ticker NVDA --period 2y --no-show
 ```
 
 ---
@@ -137,8 +150,11 @@ python src/main.py --ticker NVDA --period 1y --no-show
 
 | Indicator | Formula / Method | Interpretation |
 | :--- | :--- | :--- |
-| **Simple Moving Average (SMA)** | $\text{SMA}_n = \frac{1}{n} \sum_{i=0}^{n-1} P_{t-i}$ | Identifies overall trend direction and key support/resistance levels. A bullish "Golden Cross" occurs when SMA-20 crosses above SMA-50. |
-| **Relative Strength Index (RSI)** | $\text{RSI} = 100 - \left(\frac{100}{1 + \text{RS}}\right)$ | Measures speed and change of price movements. Values $\ge 70$ signal overbought conditions (potential pullback); values $\le 30$ signal oversold conditions. |
+| **Simple Moving Average (SMA)** | $\text{SMA}_n = \frac{1}{n} \sum_{i=0}^{n-1} P_{t-i}$ | Highlights overall trend direction and standard support/resistance areas. |
+| **Exponential Moving Average (EMA)** | $\text{EMA}_t = \left(P_t \cdot \frac{2}{n+1}\right) + \text{EMA}_{t-1} \cdot \left(1 - \frac{2}{n+1}\right)$ | Places greater weight on recent prices to reduce lag compared to SMAs. |
+| **Bollinger Bands (BB)** | $\text{Upper/Lower} = \text{SMA}_{20} \pm (2 \times \sigma_{20})$ | Shaded channel indicating price volatility. Touching upper bands implies overbought status. |
+| **Relative Strength Index (RSI)** | $\text{RSI} = 100 - \left(\frac{100}{1 + \text{RS}}\right)$ | Oscillator ranging from 0-100. Readings $\ge 70$ indicate overbought levels; readings $\le 30$ indicate oversold levels. |
+| **MACD** | $\text{MACD} = \text{EMA}_{12} - \text{EMA}_{26}$ | Momentum indicator showing relationship between two EMAs. Divergences signal price reversals. |
 
 ---
 
@@ -148,8 +164,8 @@ Generated financial dashboard charts are saved to the `images/` directory:
 
 | Ticker | Output Chart Preview |
 | :---: | :--- |
-| **AAPL** | `images/AAPL_chart.png` *(Price, 20-Day SMA, 50-Day SMA, Trading Volume, RSI 14)* |
-| **MSFT** | `images/MSFT_chart.png` *(Price, 20-Day SMA, 50-Day SMA, Trading Volume, RSI 14)* |
+| **AAPL** | `images/AAPL_chart.png` *(Price, SMAs, EMA, Bollinger Bands, Volume, MACD, RSI 14)* |
+| **MSFT** | `images/MSFT_chart.png` *(Price, SMAs, EMA, Bollinger Bands, Volume, MACD, RSI 14)* |
 
 ---
 
@@ -164,11 +180,10 @@ Generated financial dashboard charts are saved to the `images/` directory:
 
 ## 🔮 Future Enhancements
 
-- [ ] Add **Exponential Moving Averages (EMA)** and **MACD (Moving Average Convergence Divergence)**.
-- [ ] Add **Bollinger Bands** volatility indicators.
 - [ ] Support multi-ticker comparison dashboard on a single figure.
 - [ ] Implement interactive web GUI using **Streamlit** or **Dash**.
 - [ ] Incorporate automated sentiment analysis on stock news.
+- [ ] Incorporate simple buy/sell backtesting signals based on indicator crossovers.
 
 ---
 

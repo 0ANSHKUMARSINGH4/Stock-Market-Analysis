@@ -101,7 +101,8 @@ def main():
 
     # Display dataset preview snippet
     print("\n[Dataset Summary]")
-    print(analyzed_df[['Date', 'Close', 'SMA_20', 'SMA_50', 'RSI_14']].tail(5).to_string(index=False))
+    cols_to_preview = ['Date', 'Close', 'SMA_20', 'EMA_20', 'BB_Upper', 'BB_Lower', 'MACD', 'RSI_14']
+    print(analyzed_df[cols_to_preview].tail(5).to_string(index=False))
 
     # 4. Generate & Save Stock Analysis Visualizations
     images_dir = "images"
